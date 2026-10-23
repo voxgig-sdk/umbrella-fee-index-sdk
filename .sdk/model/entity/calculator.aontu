@@ -1,0 +1,126 @@
+# Entity: calculator
+
+main: kit: entity: calculator: {
+
+  alias: field: {}
+
+  fields: {
+    dayRate: {
+      h: "Day Rate"
+      n: "dayRate"
+      r: false
+      sh: "Day rate"
+      t: "`$NUMBER`"
+    }
+    daysPerWeek: {
+      h: "Days Per Week"
+      n: "daysPerWeek"
+      r: false
+      sh: "Days worked per week"
+      t: "`$NUMBER`"
+    }
+    expenses: {
+      h: "Expenses"
+      n: "expenses"
+      r: false
+      sh: "Annual business expenses (outside IR35 only)"
+      t: "`$NUMBER`"
+    }
+    ir35: {
+      h: "Ir35"
+      n: "ir35"
+      r: false
+      sh: "IR35 status"
+      t: "`$STRING`"
+    }
+    weeksPerYear: {
+      h: "Weeks Per Year"
+      n: "weeksPerYear"
+      r: false
+      sh: "Working weeks per year"
+      t: "`$NUMBER`"
+    }
+  }
+
+  name: "calculator"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "dayRate"
+            "daysPerWeek"
+            "expenses"
+            "ir35"
+            "weeksPerYear"
+          ]
+          co: {
+            id: "POST /mcp/tools/calculate"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/mcp/tools/calculate"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "mcp"
+            }
+            {
+              lit: "tools"
+            }
+            {
+              lit: "calculate"
+            }
+          ]
+          t: {
+            req: {
+              dayRate: "`reqdata.day_rate`"
+              daysPerWeek: "`reqdata.days_per_week`"
+              expenses: "`reqdata.expense`"
+              ir35: "`reqdata.ir35`"
+              weeksPerYear: "`reqdata.weeks_per_year`"
+            }
+            res: "`body`"
+          }
+        }
+        {
+          bf: false
+          co: {
+            id: "POST /mcp/tools/calculator_describe"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/mcp/tools/calculator_describe"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "mcp"
+            }
+            {
+              lit: "tools"
+            }
+            {
+              lit: "calculator_describe"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

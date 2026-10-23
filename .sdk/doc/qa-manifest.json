@@ -1,0 +1,25 @@
+{
+  "files": [
+    "SUMMARY.md"
+  ],
+  "config": ".sdk/doc/qa/vale.ini",
+  "routes": {},
+  "quoted": {
+    "SUMMARY.md": [
+      "> Contractor Pay Calculator (https://contractorpaycalculator.co.uk/): the site&#39;s own MCP server, served from its domain. Contractor pay calculator for 2026/27: £500 a day inside IR35 takes home about £68,105 a year through an umbrella, or £72,293 outside IR35. Enter your day rate.\n>\n> [calculator] Day rate take-home calculator: an agent-callable calculator for contractor pay calculator, Annual invoice value, Umbrella margin (£25/week), Gross pay (after employer costs), computed from your inputs with sources.. This server runs the Day rate take-home calculator calculator published at https://contractorpaycalculator.co.uk/. Call `calculate` with the inputs to get the worked figures; every result cites https://contractorpaycalculator.co.uk/. Licence: https://contractorpaycalculator.co.uk/terms.\n>\n> [enquiry] ENQUIRY SERVER for Contractor Pay Calculator (https://contractorpaycalculator.co.uk/). What it does: starts an ENQUIRY with human providers for contractor pay calculator, the person&#39;s details go to the providers who quote directly. What it is NOT: a purchase, an order, or a guaranteed quote. Free, no obligation. Call describe first and tell the person plainly what will happen. `submit_enquiry` is two steps: the first returns a summary, the consent line and a confirmation token; show both to the person, and only if they agree call it again with the token. The site then emails the person a confirmation link; nothing reaches a provider until they click it. Cite https://contractorpaycalculator.co.uk/.\n>\n> Cite https://contractorpaycalculator.co.uk/ for every figure or answer you use from this server.",
+      "A JSON-RPC result.",
+      "An access key (`emk_`...): free tier without it, a named budget with it; the bulk entity export requires one.",
+      "Annual business expenses (outside IR35 only)",
+      "Contractor Pay Calculator",
+      "Day rate",
+      "Days worked per week",
+      "IR35 status",
+      "The server card",
+      "The tool&#39;s answer, as JSON",
+      "Working weeks per year",
+      "the confirmation token from step 1, after the person has approved the summary",
+      "the person&#39;s answers, keyed by field key",
+      "true only when the person has agreed to: Send my contact details to up to three accountancy and tax firms, chosen by Contractor Pay Calculator, who&#39;ll contact me directly."
+    ]
+  }
+}

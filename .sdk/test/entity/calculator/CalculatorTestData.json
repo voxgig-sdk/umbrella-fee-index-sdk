@@ -1,0 +1,53 @@
+{
+  "existing": {
+    "calculator": {
+      "CALCULATOR00": {
+        "dayRate": 50,
+        "daysPerWeek": 51,
+        "expenses": 52,
+        "ir35": "s35",
+        "weeksPerYear": 54,
+        "id": "CALCULATOR00"
+      },
+      "CALCULATOR01": {
+        "dayRate": 100,
+        "daysPerWeek": 101,
+        "expenses": 102,
+        "ir35": "s67",
+        "weeksPerYear": 104,
+        "id": "CALCULATOR01"
+      },
+      "CALCULATOR02": {
+        "dayRate": 150,
+        "daysPerWeek": 151,
+        "expenses": 152,
+        "ir35": "s99",
+        "weeksPerYear": 154,
+        "id": "CALCULATOR02"
+      }
+    }
+  },
+  "new": {
+    "calculator": {
+      "calculator_ref01": {
+        "dayRate": 200,
+        "daysPerWeek": 201,
+        "expenses": 202,
+        "ir35": "scb",
+        "weeksPerYear": 204
+      }
+    }
+  },
+  "requests": {
+    "POST /mcp/tools/calculate": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "POST /mcp/tools/calculator_describe": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

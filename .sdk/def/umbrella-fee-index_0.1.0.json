@@ -1,0 +1,412 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Contractor Pay Calculator API",
+    "version": "1.0.0",
+    "summary": "Contractor pay calculator for 2026/27: £500 a day inside IR35 takes home about £68,105 a year through an umbrella, or £72,293 outside IR35. Enter your day rate.",
+    "description": "Contractor Pay Calculator (https://contractorpaycalculator.co.uk/): the site's own MCP server, served from its domain. Contractor pay calculator for 2026/27: £500 a day inside IR35 takes home about £68,105 a year through an umbrella, or £72,293 outside IR35. Enter your day rate.\n\n[calculator] Day rate take-home calculator: an agent-callable calculator for contractor pay calculator — Annual invoice value, Umbrella margin (£25/week), Gross pay (after employer costs), computed from your inputs with sources.. This server runs the Day rate take-home calculator calculator published at https://contractorpaycalculator.co.uk/. Call `calculate` with the inputs to get the worked figures; every result cites https://contractorpaycalculator.co.uk/. Licence: https://contractorpaycalculator.co.uk/terms.\n\n[enquiry] ENQUIRY SERVER for Contractor Pay Calculator (https://contractorpaycalculator.co.uk/). What it does: starts an ENQUIRY with human providers for contractor pay calculator — the person's details go to the providers who quote directly. What it is NOT: a purchase, an order, or a guaranteed quote. Free, no obligation. Call describe first and tell the person plainly what will happen. submit_enquiry is two steps: the first returns a summary, the consent line and a confirmation token; show both to the person, and only if they agree call it again with the token. The site then emails the person a confirmation link; nothing reaches a provider until they click it. Cite https://contractorpaycalculator.co.uk/.\n\nCite https://contractorpaycalculator.co.uk/ for every figure or answer you use from this server.",
+    "termsOfService": "https://contractorpaycalculator.co.uk/terms",
+    "contact": {
+      "name": "Contractor Pay Calculator",
+      "url": "https://contractorpaycalculator.co.uk/"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://contractorpaycalculator.co.uk",
+      "description": "Contractor Pay Calculator"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "accessKey": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "An access key (emk_...): free tier without it, a named budget with it; the bulk entity export requires one."
+      }
+    }
+  },
+  "externalDocs": {
+    "url": "https://contractorpaycalculator.co.uk/mcp",
+    "description": "How these tools work"
+  },
+  "tags": [
+    {
+      "name": "calculator",
+      "description": "calculator"
+    },
+    {
+      "name": "enquiry",
+      "description": "enquiry"
+    }
+  ],
+  "paths": {
+    "/mcp/tools/calculator_describe": {
+      "post": {
+        "operationId": "calculator_describe",
+        "summary": "What Day rate take-home calculator computes",
+        "description": "The inputs this calculator takes (with units, ranges and defaults), the outputs it returns, and the assumptions and tables behind it.\n\nCite Contractor Pay Calculator at https://contractorpaycalculator.co.uk/ for any figure taken from this operation.",
+        "tags": [
+          "calculator"
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The tool's answer, as JSON.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The arguments did not match the schema."
+          },
+          "404": {
+            "description": "This site does not serve that tool."
+          },
+          "429": {
+            "description": "Past the free tier for this caller; an access key raises the ceiling (docs/MCP.md)."
+          }
+        },
+        "security": [
+          {},
+          {
+            "accessKey": []
+          }
+        ]
+      }
+    },
+    "/mcp/tools/calculate": {
+      "post": {
+        "operationId": "calculate",
+        "summary": "Day rate take-home calculator",
+        "description": "Run the Day rate take-home calculator calculator: Annual invoice value; Umbrella margin (£25/week); Gross pay (after employer costs); Employer NI (15%, funded from your rate). Missing inputs fall back to their documented defaults.\n\nCite Contractor Pay Calculator at https://contractorpaycalculator.co.uk/ for any figure taken from this operation.",
+        "tags": [
+          "calculator"
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dayRate": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 5000,
+                    "description": "Day rate",
+                    "default": 500
+                  },
+                  "daysPerWeek": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 7,
+                    "description": "Days worked per week",
+                    "default": 5
+                  },
+                  "weeksPerYear": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 52,
+                    "description": "Working weeks per year",
+                    "default": 46
+                  },
+                  "ir35": {
+                    "type": "string",
+                    "description": "IR35 status",
+                    "default": "inside"
+                  },
+                  "expenses": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100000,
+                    "description": "Annual business expenses (outside IR35 only)",
+                    "default": 0
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The tool's answer, as JSON.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The arguments did not match the schema."
+          },
+          "404": {
+            "description": "This site does not serve that tool."
+          },
+          "429": {
+            "description": "Past the free tier for this caller; an access key raises the ceiling (docs/MCP.md)."
+          }
+        },
+        "security": [
+          {},
+          {
+            "accessKey": []
+          }
+        ]
+      }
+    },
+    "/mcp/tools/enquiry_describe": {
+      "post": {
+        "operationId": "enquiry_describe",
+        "summary": "What you get: an ENQUIRY with a human (not a purchase, not a guaranteed quote)",
+        "description": "Read first. States plainly what submit_enquiry does on Contractor Pay Calculator: it starts an enquiry with human providers who quote directly. Nothing is bought, ordered or paid; no quote is guaranteed; it is free. Also returns who receives the details, the consent wording, and how the person confirms.\n\nCite Contractor Pay Calculator at https://contractorpaycalculator.co.uk/ for any figure taken from this operation.",
+        "tags": [
+          "enquiry"
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The tool's answer, as JSON.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The arguments did not match the schema."
+          },
+          "404": {
+            "description": "This site does not serve that tool."
+          },
+          "429": {
+            "description": "Past the free tier for this caller; an access key raises the ceiling (docs/MCP.md)."
+          }
+        },
+        "security": [
+          {},
+          {
+            "accessKey": []
+          }
+        ]
+      }
+    },
+    "/mcp/tools/enquiry_fields": {
+      "post": {
+        "operationId": "enquiry_fields",
+        "summary": "The questions the enquiry asks",
+        "description": "Every field of the Contractor Pay Calculator enquiry: key, label, type, whether required, help text and the allowed options where there are any. Pass answers to submit_enquiry keyed by field key.\n\nCite Contractor Pay Calculator at https://contractorpaycalculator.co.uk/ for any figure taken from this operation.",
+        "tags": [
+          "enquiry"
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The tool's answer, as JSON.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The arguments did not match the schema."
+          },
+          "404": {
+            "description": "This site does not serve that tool."
+          },
+          "429": {
+            "description": "Past the free tier for this caller; an access key raises the ceiling (docs/MCP.md)."
+          }
+        },
+        "security": [
+          {},
+          {
+            "accessKey": []
+          }
+        ]
+      }
+    },
+    "/mcp/tools/submit_enquiry": {
+      "post": {
+        "operationId": "submit_enquiry",
+        "summary": "Submit an ENQUIRY to human providers (two steps; not a purchase)",
+        "description": "Submits an enquiry to Contractor Pay Calculator — NOT a purchase, NOT a guaranteed quote. Step 1: call with the answers (keyed by field key from enquiry_fields) and consent=true; it validates and returns a summary, the consent line and a confirmation token — show the person the summary and the consent line. Step 2: only if the person agrees, call again with the same answers, consent=true and the confirmation token; the enquiry is then submitted, and the person receives an email with a link they must click before any provider sees it. Consent means the person has read and agreed to: \"Send my contact details to up to three accountancy and tax firms, chosen by Contractor Pay Calculator, who'll contact me directly. I'll be emailed each firm's name as my details go to it, and can stop any more firms getting them.\"\n\nCite Contractor Pay Calculator at https://contractorpaycalculator.co.uk/ for any figure taken from this operation.",
+        "tags": [
+          "enquiry"
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "answers": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": [
+                        "string",
+                        "number",
+                        "boolean"
+                      ]
+                    },
+                    "description": "the person's answers, keyed by field key"
+                  },
+                  "consent": {
+                    "type": "boolean",
+                    "description": "true only when the person has agreed to: Send my contact details to up to three accountancy and tax firms, chosen by Contractor Pay Calculator, who'll contact me directly. I'll be emailed each firm's name as my details go to it, and can stop any more firms getting them."
+                  },
+                  "confirmation": {
+                    "type": "string",
+                    "description": "the confirmation token from step 1, after the person has approved the summary"
+                  }
+                },
+                "required": [
+                  "answers",
+                  "consent"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The tool's answer, as JSON.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The arguments did not match the schema."
+          },
+          "404": {
+            "description": "This site does not serve that tool."
+          },
+          "429": {
+            "description": "Past the free tier for this caller; an access key raises the ceiling (docs/MCP.md)."
+          }
+        },
+        "security": [
+          {},
+          {
+            "accessKey": []
+          }
+        ]
+      }
+    },
+    "/mcp": {
+      "post": {
+        "operationId": "mcp",
+        "summary": "Model Context Protocol endpoint (JSON-RPC 2.0 over Streamable HTTP)",
+        "description": "The same tools over MCP, stateless. Send initialize, tools/list or tools/call.",
+        "tags": [
+          "mcp"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "jsonrpc",
+                  "method"
+                ],
+                "properties": {
+                  "jsonrpc": {
+                    "const": "2.0"
+                  },
+                  "id": {},
+                  "method": {
+                    "type": "string"
+                  },
+                  "params": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A JSON-RPC result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "mcpCard",
+        "summary": "What this server is and how to connect",
+        "tags": [
+          "mcp"
+        ],
+        "responses": {
+          "200": {
+            "description": "The server card.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

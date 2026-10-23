@@ -1,0 +1,47 @@
+# Generated from the API definition and overwritten on every build: do not
+# edit this file. Put customizations in the guide entry file, which includes
+# this one and overrides its defaults:
+#   guide.aontu
+
+guide: {
+  metrics: count: entity: 3
+  metrics: count: path: 6
+  metrics: count: method: 7
+
+  entity: calculator: {
+    path: "/mcp/tools/calculate": {
+      op: create: method: *POST
+      op: create: transform: req: "dayRate": *("`reqdata.day_rate`")|top
+      op: create: transform: req: "daysPerWeek": *("`reqdata.days_per_week`")|top
+      op: create: transform: req: "expenses": *("`reqdata.expense`")|top
+      op: create: transform: req: "ir35": *("`reqdata.ir35`")|top
+      op: create: transform: req: "weeksPerYear": *("`reqdata.weeks_per_year`")|top
+    }
+    path: "/mcp/tools/calculator_describe": {
+      op: create: method: *POST
+    }
+  }
+
+  entity: enquiry: {
+    path: "/mcp/tools/enquiry_describe": {
+      op: create: method: *POST
+    }
+    path: "/mcp/tools/enquiry_fields": {
+      op: create: method: *POST
+    }
+    path: "/mcp/tools/submit_enquiry": {
+      op: create: method: *POST
+      op: create: transform: req: "answers": *("`reqdata.answer`")|top
+      op: create: transform: req: "confirmation": *("`reqdata.confirmation`")|top
+      op: create: transform: req: "consent": *("`reqdata.consent`")|top
+    }
+  }
+
+  entity: mcp: {
+    path: "/mcp": {
+      op: create: method: *POST
+      op: load: method: *GET
+    }
+  }
+
+}

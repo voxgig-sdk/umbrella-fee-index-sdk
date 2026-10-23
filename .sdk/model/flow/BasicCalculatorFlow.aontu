@@ -1,0 +1,18 @@
+# BasicCalculatorFlow
+
+main: kit: flow: BasicCalculatorFlow:
+{
+  entity: "calculator",
+  kind: "basic",
+  name: "BasicCalculatorFlow",
+  step: [
+    {
+      i: {
+        ref: "calculator_ref01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicCalculatorFlow"
+}
